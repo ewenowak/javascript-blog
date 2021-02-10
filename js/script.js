@@ -5,19 +5,22 @@
 }); */
 
 const titleClickHandler = function(event){
+  const clickedElement = this;
   console.log('Link was clicked!');
-  console.log(event);
-  sourceCapabilities: InputDeviceCapabilities {firesTouchEvents: false}
-  srcElement: span
-  target: span
-  timeStamp: 1858.6450000002515
-  toElement: span
-  type: "click"
-  /* remove class 'active' from all article links  */
 
-  /* add class 'active' to the clicked link */
+  /* [DONE] remove class 'active' from all article links  */
 
-  /* remove class 'active' from all articles */
+  const activeLinks = document.querySelectorAll('.titles a.active');
+
+  for(let activeLink of activeLinks){
+    activeLink.classList.remove('active');
+  }
+
+  /* [IN PROGRESS] add class 'active' to the clicked link */
+
+  console.log('clickedElement:', clickedElement);
+  clickedElement.classList.add('active');
+  /* [DONE] remove class 'active' from all articles */
 
   /* get 'href' attribute from the clicked link */
 
