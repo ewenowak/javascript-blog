@@ -1,7 +1,7 @@
 {
-'use strict';
+  'use strict';
 
-const titleClickHandler = function(event){
+  const titleClickHandler = function(event){
     console.log('Link was clicked!');
     console.log(event);
     event.preventDefault();
@@ -29,24 +29,25 @@ const titleClickHandler = function(event){
     /* [DONE] get 'href' attribute from the clicked link */
      
     const articleSelector = clickedElement.getAttribute('href');
-     console.log(articleSelector);
+    console.log(articleSelector);
     
-     /* [DONE] find the correct article using the selector (value of 'href' attribute) */
+    /* [DONE] find the correct article using the selector (value of 'href' attribute) */
     
-     const targetArticle = document.querySelector(articleSelector);
+    const targetArticle = document.querySelector(articleSelector);
     console.log(targetArticle);
   
     /* [DONE] add class 'active' to the correct article */
     
     targetArticle.classList.add('active');
-}
+  };
   
   
   const optArticleSelector = '.post',
-  optTitleSelector = '.post-title',
-  optTitleListSelector = '.titles';
+    optTitleSelector = '.post-title',
+    optTitleListSelector = '.titles';
 
-  function generateTitleLinks(){
+  
+  const generateTitleLinks = function(){
 
     /* remove contents of titleList */
     
@@ -54,12 +55,13 @@ const titleClickHandler = function(event){
     function clearMessages(){
       titleList.innerHTML = '';
     }  
-    
+    clearMessages();
+
     /* find all the articles and save them to variable: articles */
     const articles = document.querySelectorAll(optArticleSelector);
     console.log('Znalazłem wszystkie artykuły');
 
-    let html = ''
+    let html = '';
     
     /* for each article */
     
@@ -98,6 +100,6 @@ const titleClickHandler = function(event){
       link.addEventListener('click', titleClickHandler);
     }
     
-  }
+  };
   generateTitleLinks();
 }
