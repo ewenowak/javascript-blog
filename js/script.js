@@ -48,7 +48,8 @@
     optTitleSelector = '.post-title',
     optTitleListSelector = '.titles',
     optArticleTagsSelector = '.post-tags .list',
-    optArticleAuthorSelector = '.post-author';
+    optArticleAuthorSelector = '.post-author',
+    optTagsListSelector = '.tags.list';
 
   
   const generateTitleLinks = function (customSelector = ''){
@@ -111,6 +112,9 @@
   generateTitleLinks();
 
   const generateTags = function (){
+
+    /* [NEW] create a new variable allTags with an empty object */
+    let allTags = {};
     
     /* find all articles */
     
@@ -138,7 +142,7 @@
       /* split tags into array */
       
       const articleTagsArray = articleTags.split(' ');
-      console.log (articleTagsArray);
+      console.log ('articleTagsArray', articleTagsArray);
       
       /* START LOOP: for each tag */
       
@@ -153,15 +157,45 @@
         
         html = html + ' ' + linkHTML;
 
-      /* END LOOP: for each tag */
+        //* [NEW] check if this link is NOT already in allTags */
+        if(!allTags[tag]) {
+        /* [NEW] add tag to allTags object */
+        allTags[tag] = 1;
+        } else {
+          allTags[tag]++;
+        }
+      /* END LOOP: for each tag */ 
       }
       
       /* insert HTML of all the links into the tags wrapper */
       
       tagWrapper.innerHTML = html;
       console.log(tagWrapper.innerHTML);
+    
     /* END LOOP: for every article: */
     }
+    
+    /* [NEW] find list of tags in right column */
+    
+    const tagList = document.querySelector(optTagsListSelector);
+
+    /* [NEW] create variable for all links HTML code */
+    
+    let allTagsHTML = '';
+
+    /* [NEW] START LOOP: for each tag in allTags: */
+    
+    for(let tag in allTags){
+    
+      /* [NEW] generate code of a link and add it to allTagsHTML */
+      allTagsHTML += tag + ' (' + allTags[tag] + ') ';
+
+    /* [NEW] END LOOP: for each tag in allTags: */
+    }
+
+    /*[NEW] add HTML from allTagsHTML to tagList */
+    tagList.innerHTML = '<a href="' +  + '">' + allTagsHTML + '</a>';
+    console.log('tagList.innetHTML', tagList.innerHTML);
   };
   
   generateTags();
