@@ -45,7 +45,8 @@
   const optArticleSelector = '.post',
     optTitleSelector = '.post-title',
     optTitleListSelector = '.titles',
-    optArticleTagsSelector = '.post-tags .list';
+    optArticleTagsSelector = '.post-tags .list',
+    optArticleAuthorSelector = '.post-author';
 
   
   function generateTitleLinks(customSelector = ''){
@@ -119,7 +120,7 @@
       /* find tags wrapper */
       
       const tagWrapper = article.querySelector(optArticleTagsSelector);
-      console.log(tagWrapper);
+      console.log('tagWrapper:', tagWrapper);
       
       /* make html variable with empty string */
       
@@ -222,5 +223,52 @@
   
   addClickListenersToTags();
   
+  function generateAuthors(){
+  
+    /* find all articles */
 
+    const articles = document.querySelectorAll(optArticleSelector);
+    console.log('articles:', articles);
+
+    /* START LOOP: for every article: */
+
+    for(let article of articles){
+  
+      /* find author wrapper */
+
+      const authorWrapper = article.querySelector(optArticleAuthorSelector);
+      console.log('authorWrapper:', authorWrapper);
+
+      /* make html variable with empty string */
+
+      let html = '';
+
+      /* get authorName from data-author attribute */
+      
+      const authorName = article.getAttribute('data-author');
+      console.log('authorName:', authorName);
+      /* get author from authorName without space */
+      
+      const author = authorName.replace(' ', '');
+      console.log('author:', author);
+
+      /* generate HTML of the link */
+
+      const linkHTML = '<a href="#author-' + author + '"><span>' + authorName + '</span></a>';
+      console.log('linkHTML', linkHTML);
+    
+      /* add generated code to html variable */
+
+      html = html + linkHTML;
+      console.log('html', html);
+
+      /* insert HTML of author-name into the author wrapper */
+      
+      authorWrapper.innerHTML = html;
+      console.log('authorWrapper', authorWrapper);
+
+    /* END LOOP: for every article: */
+    }
+  }
+generateAuthors();
 }
