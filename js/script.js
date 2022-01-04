@@ -1,9 +1,16 @@
 {
   'use strict';
 
+  const templates = {
+    articleLink: Handlebars.compile(document.querySelector('#template-article-link').innerHTML),
+    tagLink: Handlebars.compile(document.querySelector('#template-tag-link').innerHTML),
+    authorLink: Handlebars.compile(document.querySelector('#template-author-link').innerHTML),
+    tagCloudLink: Handlebars.compile(document.querySelector('#template-tag-cloud-link').innerHTML),
+    authorListLink: Handlebars.compile(document.querySelector('#template-author-list-link').innerHTML)
+  };
+
   const titleClickHandler = function(event){
-    console.log('Link was clicked!');
-    console.log(event);
+  
     event.preventDefault();
   
     /* [DONE] remove class 'active' from all article links  */
@@ -17,7 +24,6 @@
     /* [DONE] add class 'active' to the clicked link */
     
     const clickedElement = this;
-    console.log('clickedElement:', clickedElement);
     clickedElement.classList.add('active');
     
     /* [DONE] remove class 'active' from all articles */
@@ -86,16 +92,18 @@
       
       /* create HTML of the link */
       
-      const linkHTML = '<li><a href="#' + articleId + '"><span>' + articleTitle + '</span></a></li>';
+      const linkHTMLData = {id: articleId, title: articleTitle};
+      const linkHTML = templates.articleLink(linkHTMLData);
       
+
       /* insert link into titleList */
+      
       html = html + linkHTML;
     }
      
     titleList.innerHTML = html;
 
     const links = document.querySelectorAll('.titles a');
-    console.log(links);
     
     for(let link of links){
       link.addEventListener('click', titleClickHandler);
@@ -114,7 +122,6 @@
     /*START LOOP: for each tag in tags*/
     
     for (let tag in tags){
-      console.log(tag + ' is used ' + tags[tag] + ' times ');
       if(tags[tag] > params.max){
         params.max = tags[tag];
       }else if(tags[tag] < params.min){
@@ -170,9 +177,10 @@
       for(let tag of articleTagsArray){
         
         /* generate HTML of the link */
+
+        const linkHTMLData = {id: 'tag-' + tag, title: tag};
+        const linkHTML = templates.tagLink(linkHTMLData);
         
-        const linkHTML = '<li><a href="#tag-' + tag + '"><span>' + tag + '</span></a></li>';
-        console.log(linkHTML);
         
         /* add generated code to html variable */
         
@@ -203,31 +211,30 @@
     const tagList = document.querySelector(optTagsListSelector);
 
     const tagsParams = calculateTagsParams(allTags);
-    console.log('tagsParams:', tagsParams);
 
     /* [NEW] create variable for all links HTML code */
     
-    let allTagsHTML = '';
+    const allTagsData = {tags: []};
 
     /* [NEW] START LOOP: for each tag in allTags: */
     
     for(let tag in allTags){
     
       /* [NEW] generate code of a link and add it to allTagsHTML */
-      
-      const tagLinkHTML = '<li><a class="' + calculateTagClass(allTags[tag], tagsParams) + '" href="#tag-' + tag +  '"><span>' + tag + '</span></a></li>';
-      console.log('tagLinkHTML:', tagLinkHTML);
 
-      allTagsHTML += tagLinkHTML;
-
-      // allTagsHTML += '<a href="#tag-' + tag +  '"><span>' + tag + ' (' + allTags[tag] + ')</span></a> ';
+      allTagsData.tags.push({
+        tag: tag,
+        count: allTags[tag],
+        className: calculateTagClass(allTags[tag], tagsParams)
+      });
 
     /* [NEW] END LOOP: for each tag in allTags: */
     }
     
     /*[NEW] add HTML from allTagsHTML to tagList */
     
-    tagList.innerHTML = allTagsHTML;
+    tagList.innerHTML = templates.tagCloudLink(allTagsData);
+    console.log('allTagsData', allTagsData);
   };
   
   generateTags();
@@ -241,7 +248,6 @@
     /* make new constant named "clickedElement" and give it the value of "this" */
     
     const clickedElement = this;
-    console.log('clickedElement:', clickedElement);
     
     /* make a new constant "href" and read the attribute "href" of the clicked element */
     
@@ -294,7 +300,6 @@
       /* add tagClickHandler as event listener for that link */
       
       tagsLink.addEventListener('click', tagClickHandler);
-      console.log('Link was clicked');
       
       /* END LOOP: for each link */
     }
@@ -330,7 +335,8 @@
       
       /* generate HTML of the link */
 
-      const linkHTML = '<a href="#author-' + author + '"><span>' + author + '</span></a>';
+      const linkHTMLData = {id: 'author-' + author, title: author};
+      const linkHTML = templates.authorLink(linkHTMLData);
     
       /* add generated code to html variable */
 
@@ -360,7 +366,7 @@
 
     /* [NEW] create variable for all links HTML code */
     
-    let allAuthorsHTML = '';
+    const allAuthorsData = {authors: []};
     
     /* [NEW] START LOOP: for each author in allAuthors: */
     
@@ -368,14 +374,19 @@
       
       /* [NEW] generate code of a link and add it to allAuthorsHTML */
       
-      allAuthorsHTML += '<li><a href="#author-' + author + '"><span>' + author + ' (' + allAuthors[author] + ')</span></a><li>';
+      allAuthorsData.authors.push({
+        author: author,
+        count: allAuthors[author]
+      });
+
 
     /* [NEW] END LOOP: for each author in allAuthors: */
     }
     
     /*[NEW] add HTML from allAuthorsHTML to authorList */
     
-    authorList.innerHTML = allAuthorsHTML;
+    authorList.innerHTML = templates.authorListLink(allAuthorsData);
+    console.log('allAuthorsData', allAuthorsData);
   };
   generateAuthors();
 
@@ -388,7 +399,6 @@
     /* make new constant named "clickedElement" and give it the value of "this" */
 
     const clickedElement = this;
-    console.log('Author was clicked!');
   
     /* make a new constant "href" and read the attribute "href" of the clicked element */
     
@@ -415,7 +425,6 @@
     /* find all author links with "href" attribute equal to the "href" constant */
 
     const authorLinks = document.querySelectorAll('a[href="' + href + '"]' == href); 
-    console.log('authorLinks:', authorLinks);
   
     /* START LOOP: for each found author link */
 
@@ -446,7 +455,6 @@
       /* add tagClickHandler as event listener for that link */
       
       authorLink.addEventListener('click', authorClickHandler);
-      console.log('Link was clicked');
       
     /* END LOOP: for each link */
     }

@@ -1,24 +1,14 @@
-@import url('https://fonts.googleapis.com/css?family=Oswald:400,600|Sacramento|Source+Sans+Pro:300&subset=latin-ext');
-
+@import url("https://fonts.googleapis.com/css?family=Oswald:400,600|Sacramento|Source+Sans+Pro:300&subset=latin-ext");
 /* Variables */
-
-$color-light: #fff;
-$color-dark: #444;
-
-$font-logo: 'Sacramento', cursive;
-$font-header: 'Oswald', sans-serif;
-$font-text: 'Source Sans Pro', sans-serif;
-
 /* Global */
-
 *, *::before, *::after {
   box-sizing: border-box;
 }
 
 body {
-  background: $color-light;
-  font-family: $font-text;
-  color: $color-dark;
+  background: #f7b99d;
+  font-family: "Source Sans Pro", sans-serif;
+  color: #303952;
   font-weight: 300;
   font-size: 16px;
   line-height: 1.7;
@@ -32,17 +22,16 @@ body {
 .section-title {
   font-size: 22px;
   text-transform: uppercase;
-  font-family: $font-header;
+  font-family: "Oswald", sans-serif;
   font-weight: 600;
-  span {
-    text-transform: none;
-    font-weight: 400;
-    color: lighten($color-dark, 20%);
-  }
+}
+.section-title span {
+  text-transform: none;
+  font-weight: 400;
+  color: #777777;
 }
 
 /* Layout */
-
 .wrapper {
   display: flex;
   margin-left: 10px;
@@ -58,71 +47,109 @@ body {
 }
 
 .sidebar, .posts {
-  background: $color-light;
+  background: #f7b99d;
   margin-right: 10px;
   padding: 40px;
-  border: 1px solid $color-dark;
+  border: 1px solid #cf6a87;
   border-radius: 5px;
 }
 
-/* Logo */
+.sidebar:hover, .posts:hover{
+  background: #f3a683;
+}
 
+/* Logo */
 .logo {
-  font-family: $font-logo;
+  font-family: "Sacramento", cursive;
   font-weight: 400;
   font-size: 104px;
   line-height: 1;
   text-align: center;
+  color: #fff;
 }
 
 /* Lists */
-
 .list {
   list-style-type: none;
   margin: 0;
   padding: 0;
-  .active {
-    font-weight: bold;
-    color: lightseagreen;
-  }
+}
+.list .active {
+  font-weight: bold;
+  color: #cf6a87;
 }
 
-.list-horizontal {
-  li {
-    display: inline-block;
-  }
+.list-horizontal li {
+  display: inline-block;
+}
+.list li a {
+  color: #303952;
+}
+
+.list li a:hover {
+  color: #fff;
 }
 
 /* Authors */
-
-.authors {
-  li {
-    margin-bottom: 12px;
-  }
+.authors li {
+  margin-bottom: 12px;
+  color: #303952;
 }
 
 /* Post */
-
 .post {
   display: block;
   opacity: 0%;
   position: absolute;
-  &.active {
-    opacity: 100%;
-    z-index: 1;
-    transition: all 1s;
-  }
+}
+.post.active {
+  opacity: 100%;
+  z-index: 1;
+  transition: all 1s;
 }
 
 .post-author {
   font-style: italic;
 }
-
-.post-tags {
-  display: flex;
-  p {
-    margin: 0 10px 0 0;
-  }
+.post-author li {
+  list-style-type: none;
+}
+.post-author li a {
+  color: #303952;
+}
+.post-author li a:hover {
+  color: #fff;
 }
 
 
+.post-tags {
+  display: flex;
+}
+.post-tags p {
+  margin: 0 10px 0 0;
+}
+
+/* Tags */
+.tags li {
+  display: inline-block;
+  margin-right: 10px;
+}
+.tag-size-1 {
+  font-size: 120%;
+}
+
+.tag-size-2 {
+  font-size: 180%;
+}
+
+.tag-size-3 {
+  font-size: 220%;
+}
+
+.tag-size-4 {
+  font-size: 280%;
+}
+
+.tag-size-5 {
+  font-size: 300%;
+}
